@@ -43,9 +43,12 @@ const Navbar: React.FC = () => {
             <a href="tel:+79852246789" className="bg-accent text-dark px-10 py-3 text-[10px] font-black tracking-[3px] uppercase hover:bg-white transition-all">
               📞 ПОЗВОНИТЬ
             </a>
+            <a href="http://t.me/latypovvalery" target="_blank" rel="noopener noreferrer" className="border border-accent/40 text-accent px-8 py-3 text-[10px] font-black tracking-[3px] uppercase hover:bg-accent hover:text-dark transition-all">
+              TELEGRAM
+            </a>
           </div>
 
-          {/* MOBILE MENU TOGGLE (HAMBURGER TO X) */}
+          {/* MOBILE MENU TOGGLE */}
           <button 
             onClick={() => setIsOpen(!isOpen)} 
             className="lg:hidden relative z-[1300] w-10 h-10 flex flex-col items-center justify-center gap-[6px]"
@@ -60,6 +63,17 @@ const Navbar: React.FC = () => {
 
       {/* MOBILE MENU OVERLAY */}
       <div className={`fixed inset-0 z-[1100] bg-dark/98 backdrop-blur-3xl transition-all duration-700 flex flex-col items-center justify-center gap-10 ${isOpen ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-full pointer-events-none'}`}>
+        
+        {/* КРЕСТИК ДЛЯ ЗАКРЫТИЯ */}
+        <button 
+          onClick={() => setIsOpen(false)} 
+          className="absolute top-8 right-8 w-12 h-12 flex items-center justify-center group"
+          aria-label="Закрыть меню"
+        >
+          <span className="absolute w-8 h-[2px] bg-accent rotate-45 transition-all group-hover:bg-white"></span>
+          <span className="absolute w-8 h-[2px] bg-accent -rotate-45 transition-all group-hover:bg-white"></span>
+        </button>
+
         {navLinks.map(l => (
           <a key={l.id} href={`#${l.id}`} onClick={() => setIsOpen(false)} className="font-serif text-4xl text-white hover:text-accent transition-colors">
             {l.label}
@@ -69,7 +83,7 @@ const Navbar: React.FC = () => {
           <a href="tel:+79852246789" className="w-full text-center bg-accent text-dark py-5 text-sm font-black tracking-widest uppercase shadow-2xl">
             📞 ПОЗВОНИТЬ: +7 985 224-67-89
           </a>
-          <a href="http://t.me/latypovvalery" target="_blank" className="w-full text-center border border-accent/40 text-accent py-5 text-sm font-black tracking-widest uppercase">
+          <a href="http://t.me/latypovvalery" target="_blank" rel="noopener noreferrer" className="w-full text-center border border-accent/40 text-accent py-5 text-sm font-black tracking-widest uppercase">
             Telegram Direct
           </a>
         </div>
