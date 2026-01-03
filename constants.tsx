@@ -1,4 +1,5 @@
-import { ComparisonItem, GalleryItem, Testimonial } from './types';
+
+import { ComparisonItem, GalleryItem, Testimonial, TransformationPhase } from './types';
 
 export const COMPARISON_COLLECTION: ComparisonItem[] = [
   {
@@ -43,4 +44,27 @@ export const TESTIMONIALS: Testimonial[] = [
   { id: 2, name: 'Олег Конников', description: 'Звездный стоматолог, \nэксперт федеральных ТВ-проектов.', videoUrl: 'https://rutube.ru/play/embed/ffb709841bf1ffda248861c8f9c5f41d' },
   { id: 3, name: 'Lex Borealis', description: 'Международные юристы: \nЛондон, Дубай, Москва.', videoUrl: 'https://rutube.ru/play/embed/9ee74e5c2e6ddeb2d0bb97e257cae03b' },
   { id: 4, name: 'Роман Тарасенко', description: 'Маркетолог №1, стратег, \nавтор бестселлеров.', videoUrl: 'https://rutube.ru/play/embed/28c6c2f35ca1d859ce6a037c859a6e26' }
+];
+
+// Added TRANSFORMATION_DATA to resolve import errors in components/Transformation.tsx and MasterPage.tsx
+export const TRANSFORMATION_DATA: TransformationPhase[] = [
+  {
+    id: '1',
+    label: 'PHASE 01: ORIGIN',
+    image: 'https://static.tildacdn.com/tild6639-6330-4565-a437-643966646532/1766840175558.jpg'
+  },
+  {
+    id: '2',
+    label: 'PHASE 02: PROCESS',
+    image: 'https://static.tildacdn.com/tild3034-3933-4335-a564-616461353762/IMG_9206.jpg'
+  },
+  {
+    id: '3',
+    label: 'PHASE 03: EXEC PROTOCOL',
+    image: 'https://static.tildacdn.com/tild3166-3231-4264-a166-633762613832/Generated_Image_Dece.jpg',
+    subPhases: [
+      { id: 'a', label: 'LORO PIANA', image: 'https://static.tildacdn.com/tild3166-3231-4264-a166-633762613832/Generated_Image_Dece.jpg' },
+      { id: 'b', label: 'BRIONI', image: 'https://static3.tildacdn.com/tild3863-3864-4336-b531-626366353438/Generated_Image_Dece.jpg' }
+    ]
+  }
 ];
