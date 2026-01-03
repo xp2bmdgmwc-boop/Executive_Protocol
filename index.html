@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ru" style="overflow-x: hidden;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>EXECUTIVE PROTOCOL | Valery Latypov</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              accent: '#C5A059', 
+              dark: '#0a0a0a',
+              card: '#141414',
+              muted: '#8a8a8a',
+            },
+            fontFamily: {
+              serif: ['"Cormorant Garamond"', 'serif'],
+              sans: ['Manrope', 'sans-serif'],
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      :root { scroll-behavior: smooth; }
+      body { 
+        background-color: #0a0a0a; 
+        color: #f0f0f0; 
+        margin: 0; 
+        padding: 0; 
+        -webkit-font-smoothing: antialiased; 
+        font-family: 'Manrope', sans-serif;
+        overflow-x: hidden;
+        width: 100%;
+      }
+      .fade-up { opacity: 0; transform: translateY(20px); transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
+      .fade-up.visible { opacity: 1; transform: translateY(0); }
+      
+      ::-webkit-scrollbar { width: 3px; }
+      ::-webkit-scrollbar-track { background: #0a0a0a; }
+      ::-webkit-scrollbar-thumb { background: #C5A059; }
+
+      .gold-gradient-text {
+        background: linear-gradient(135deg, #C5A059 0%, #F3E5AB 50%, #C5A059 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .scrollbar-hide::-webkit-scrollbar { display: none; }
+      .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+      
+      .text-tracking-ultra { letter-spacing: 0.3em; }
+      .text-tracking-wide { letter-spacing: 0.1em; }
+
+      /* Optical centering for large price text with currency symbol */
+      .optical-center-text {
+        display: inline-block;
+        letter-spacing: -0.02em;
+        text-align: center;
+      }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "@google/genai": "https://esm.sh/@google/genai@^1.34.0"
+  }
+}
+</script>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+</body>
+</html>
