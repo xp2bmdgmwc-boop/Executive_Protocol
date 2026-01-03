@@ -1,20 +1,26 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
 
-# Run and deploy your AI Studio app
+# EXECUTIVE PROTOCOL | Valery Latypov
 
-This contains everything you need to run your app locally.
+Strategic Visual Asset Protocol for global leaders. Created by Valery Latypov.
 
-View your app in AI Studio: https://ai.studio/apps/drive/13wXxBJhqfmCySgSfB0Hqqnt-dWbvb0bv
+## 🚀 Как запустить на GitHub Pages
 
-## Run Locally
+1. **Создайте репозиторий** на GitHub.
+2. **Загрузите все файлы** проекта в корень (main branch).
+3. Перейдите в **Settings > Pages**.
+4. В разделе **Build and deployment** выберите ветку `main` и папку `/ (root)`.
+5. Нажмите **Save**. Через 1-2 минуты ваш сайт будет доступен по адресу `https://your-username.github.io/your-repo-name/`.
 
-**Prerequisites:**  Node.js
+## 🛠 Технологии
 
+- **React 19** (через ESM-модули)
+- **Tailwind CSS** (премиальная стилизация)
+- **Google Gemini API** (генерация визуальных стратегий)
+- **Cormorant Garamond** (типография высокого класса)
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+## 🔑 Настройка API Key
+
+Для работы ИИ-ассистента необходимо настроить секрет `API_KEY` в настройках вашего окружения или GitHub Actions, если вы используете систему сборки. По умолчанию приложение ожидает ключ из `process.env.API_KEY`.
+
+---
+© 2025 Valery Latypov. Executive Protocol™. All rights reserved.
