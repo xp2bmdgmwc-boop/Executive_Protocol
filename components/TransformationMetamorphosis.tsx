@@ -23,23 +23,40 @@ const TransformationMetamorphosis: React.FC = () => {
   return (
     <div className="relative bg-black text-white px-0 md:px-4 overflow-hidden fade-up">
       {/* DESKTOP VIEW */}
-      <div className="hidden md:grid max-w-6xl mx-auto md:grid-cols-12 gap-12 items-center py-24 md:py-48">
-        <div className="w-full md:col-span-8 relative">
-          <div className="relative aspect-[3/4] md:aspect-[4/5] overflow-hidden border border-white/10 shadow-3xl bg-dark">
+      <div className="hidden md:grid max-w-6xl mx-auto md:grid-cols-12 gap-12 items-center py-24 md:py-32">
+        {/* IMAGE BLOCK: Fixed height 720px on desktop */}
+        <div className="w-full md:col-span-7 lg:col-span-8 relative">
+          <div className="relative aspect-[3/4] md:aspect-auto md:h-[720px] overflow-hidden border border-white/10 shadow-3xl bg-dark">
             {stages.map((stage, idx) => (
-              <img key={idx} src={stage.img} alt={stage.title} className={`absolute inset-0 w-full h-full object-cover transition-all duration-[1000ms] ${activeStage === idx ? 'opacity-100 scale-100' : 'opacity-0 scale-110'}`} />
+              <img 
+                key={idx} 
+                src={stage.img} 
+                alt={stage.title} 
+                className={`absolute inset-0 w-full h-full object-cover transition-all duration-[1000ms] ${activeStage === idx ? 'opacity-100 scale-100' : 'opacity-0 scale-110'}`} 
+              />
             ))}
-            <div className="absolute inset-0 border-[30px] border-black/20 pointer-events-none" />
+            <div className="absolute inset-0 border-[20px] border-black/20 pointer-events-none" />
           </div>
         </div>
 
-        <div className="w-full md:col-span-4 flex flex-col space-y-12 text-left">
-          <div className="space-y-14">
+        {/* TEXT/BUTTONS BLOCK: Centered relative to 720px height */}
+        <div className="w-full md:col-span-5 lg:col-span-4 flex flex-col justify-center space-y-10 text-left md:h-[720px]">
+          <div className="space-y-10">
             {stages.map((stage, idx) => (
-              <div key={idx} className={`transition-all duration-1000 cursor-pointer ${activeStage === idx ? 'opacity-100 translate-x-6' : 'opacity-10 hover:opacity-30'}`} onClick={() => setActiveStage(idx)}>
-                <span className="text-[10px] font-bold tracking-[0.5em] text-accent uppercase block mb-3">0{idx + 1} — {stage.label}</span>
-                <h3 className="text-3xl font-serif italic mb-4">{stage.title}</h3>
-                {activeStage === idx && <p className="text-sm text-white/40 font-light leading-relaxed animate-slide-right">{stage.desc}</p>}
+              <div 
+                key={idx} 
+                className={`transition-all duration-700 cursor-pointer group ${activeStage === idx ? 'opacity-100 translate-x-4' : 'opacity-20 hover:opacity-50'}`} 
+                onClick={() => setActiveStage(idx)}
+              >
+                <span className="text-[10px] font-bold tracking-[0.4em] text-accent uppercase block mb-2 transition-transform duration-500 group-hover:translate-x-1">
+                  0{idx + 1} — {stage.label}
+                </span>
+                <h3 className="text-2xl lg:text-3xl font-serif italic mb-3">{stage.title}</h3>
+                {activeStage === idx && (
+                  <p className="text-sm text-white/40 font-light leading-relaxed animate-slide-right max-w-[280px]">
+                    {stage.desc}
+                  </p>
+                )}
               </div>
             ))}
           </div>
@@ -74,9 +91,20 @@ const TransformationMetamorphosis: React.FC = () => {
 
         <div className="px-6 pb-24">
           <div className="h-[1px] w-full bg-white/10 relative">
-            <div className="absolute top-0 left-0 h-full bg-accent transition-all duration-300" style={{ width: `${progress}%` }} />
+            <div 
+              className="absolute top-0 left-0 h-full bg-accent transition-all duration-300" 
+              style={{ width: `${progress}%` }} 
+            />
           </div>
         </div>
+      </div>
+
+      {/* PROGRESS INDICATOR (Desktop only) */}
+      <div className="hidden md:block absolute bottom-0 left-0 w-full h-[1px] bg-white/5">
+        <div 
+          className="h-full bg-accent transition-all duration-1000" 
+          style={{ width: `${((activeStage + 1) / stages.length) * 100}%` }} 
+        />
       </div>
     </div>
   );
