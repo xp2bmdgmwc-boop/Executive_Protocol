@@ -1,4 +1,3 @@
-
 export interface TransformationPhase {
   id: string;
   label: string;

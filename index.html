@@ -55,14 +55,12 @@
       .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
       
       .text-tracking-ultra { letter-spacing: 0.3em; }
-      .text-tracking-wide { letter-spacing: 0.1em; }
 
-      /* Optical centering for large price text with currency symbol */
-      .optical-center-text {
-        display: inline-block;
-        letter-spacing: -0.02em;
-        text-align: center;
+      @keyframes fade-in {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
       }
+      .animate-fade-in { animation: fade-in 0.8s ease-out forwards; }
     </style>
 <script type="importmap">
 {

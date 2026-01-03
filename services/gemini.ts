@@ -1,4 +1,3 @@
-
 import { GoogleGenAI, Type } from "@google/genai";
 
 export interface VisualStrategyResponse {
@@ -34,7 +33,7 @@ export class GeminiService {
     try {
       return JSON.parse(text) as VisualStrategyResponse;
     } catch (e) {
-      console.error("Parse Error", e);
+      console.error("AI Strategy Parse Error", e);
       throw new Error("Ошибка обработки данных ИИ");
     }
   }

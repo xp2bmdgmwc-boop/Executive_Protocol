@@ -1,4 +1,3 @@
-
 import { TransformationPhase, GalleryItem, Testimonial, ComparisonItem } from './types';
 
 export const TRANSFORMATION_DATA: TransformationPhase[] = [
@@ -66,8 +65,8 @@ export const AUTHORITY_ARCHIVE: GalleryItem[] = [
 ];
 
 export const TESTIMONIALS: Testimonial[] = [
-  { id: 1, name: 'Ирина Хакамада', description: 'Публичный деятель, писатель, бизнес-спикер.', videoUrl: 'https://rutube.ru/play/embed/ef3ddf744edc99e9d1dbeb3f92540683' },
-  { id: 2, name: 'Олег Конников', description: 'Konnikov Clinic, эксперт федеральных ТВ-проектов.', videoUrl: 'https://rutube.ru/play/embed/ffb709841bf1ffda248861c8f9c5f41d' },
-  { id: 3, name: 'Lex Borealis', description: 'Бизнес-инноватор, эксперт по системному мышлению.', videoUrl: 'https://rutube.ru/play/embed/9ee74e5c2e6ddeb2d0bb97e257cae03b' },
-  { id: 4, name: 'Роман Тарасенко', description: 'Маркетолог №1, автор бестселлеров, стратег.', videoUrl: 'https://rutube.ru/play/embed/28c6c2f35ca1d859ce6a037c859a6e26' }
+  { id: 1, name: 'Ирина Хакамада', description: 'Бизнес-спикер, \nпубличный деятель.', videoUrl: 'https://rutube.ru/play/embed/ef3ddf744edc99e9d1dbeb3f92540683' },
+  { id: 2, name: 'Олег Конников', description: 'Звездный стоматолог, \nэксперт федеральных ТВ-проектов.', videoUrl: 'https://rutube.ru/play/embed/ffb709841bf1ffda248861c8f9c5f41d' },
+  { id: 3, name: 'Lex Borealis', description: 'Международные юристы: \nЛондон, Дубай, Москва.', videoUrl: 'https://rutube.ru/play/embed/9ee74e5c2e6ddeb2d0bb97e257cae03b' },
+  { id: 4, name: 'Роман Тарасенко', description: 'Маркетолог №1, стратег, \nавтор бестселлеров.', videoUrl: 'https://rutube.ru/play/embed/28c6c2f35ca1d859ce6a037c859a6e26' }
 ];
