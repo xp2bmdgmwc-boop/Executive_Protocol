@@ -24,20 +24,20 @@ const SmartGallery: React.FC<SmartGalleryProps> = ({ id, title, subtitle, items,
 
   return (
     <section id={id} className="py-24 md:py-48 bg-[#0a0a0a] border-b border-white/5 overflow-hidden">
-      <div className="container mx-auto px-6">
-        <div className="max-w-4xl mb-16 md:mb-28 fade-up text-left">
+      <div className="container mx-auto">
+        <div className="px-6 max-w-4xl mb-16 md:mb-28 fade-up text-left">
           <span className="text-accent text-[11px] font-black uppercase tracking-[0.5em] block mb-8">{subtitle}</span>
-          <h2 className="font-serif text-[42px] md:text-7xl text-white tracking-tighter leading-tight italic">{title}</h2>
+          {title && <h2 className="font-serif text-[42px] md:text-7xl text-white tracking-tighter leading-tight italic">{title}</h2>}
         </div>
 
         <div className="relative">
           <div 
             ref={scrollRef}
             onScroll={handleScroll}
-            className="flex md:grid md:grid-cols-4 gap-6 md:gap-12 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-12"
+            className="flex md:grid md:grid-cols-4 gap-4 md:gap-12 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-12 px-6 md:px-0"
           >
             {items.map((item, index) => (
-              <div key={index} className="min-w-[85vw] md:min-w-0 snap-center group/card cursor-pointer">
+              <div key={index} className="min-w-[78vw] md:min-w-0 snap-center group/card cursor-pointer">
                 {type === 'comparison' && <ComparisonCard item={item as ComparisonItem} isLCP={isLCP && index === 0} />}
                 {type === 'photo' && <PhotoCard item={item as GalleryItem} isLCP={isLCP && index === 0} />}
                 {type === 'video' && <VideoCard item={item as Testimonial} />}
@@ -45,8 +45,13 @@ const SmartGallery: React.FC<SmartGalleryProps> = ({ id, title, subtitle, items,
             ))}
           </div>
 
-          <div className="md:hidden h-[1px] w-full bg-white/10 relative mt-4">
-            <div className="absolute top-0 left-0 h-full bg-accent transition-all duration-300" style={{ width: `${progress}%` }} />
+          <div className="md:hidden px-6 mt-4">
+            <div className="h-[1px] w-full bg-white/10 relative">
+              <div 
+                className="absolute top-0 left-0 h-full bg-accent transition-all duration-300" 
+                style={{ width: `${progress}%` }} 
+              />
+            </div>
           </div>
         </div>
       </div>

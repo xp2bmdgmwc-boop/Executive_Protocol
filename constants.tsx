@@ -1,5 +1,5 @@
 
-import { ComparisonItem, GalleryItem, Testimonial, TransformationPhase } from './types';
+import { ComparisonItem, GalleryItem, Testimonial, TransformationStep } from './types';
 
 export const COMPARISON_COLLECTION: ComparisonItem[] = [
   {
@@ -36,7 +36,11 @@ export const AUTHORITY_ARCHIVE: GalleryItem[] = [
   { id: 1, name: 'Ирина Хакамада', status: 'Символ лидерства', image: 'https://static.tildacdn.com/tild6336-6461-4239-a533-636461316432/_MG_4315.jpg' },
   { id: 2, name: 'Михаил Федоренко', status: 'Госсоветник 2 класса', image: 'https://static.tildacdn.com/tild3065-6262-4766-b635-353233626138/IMG_4309-Edit.jpg' },
   { id: 3, name: 'Аделия Петросян', status: 'Чемпионка РФ', image: 'https://static.tildacdn.com/tild3436-3831-4433-b630-313939653736/IMG_3426-Edit.jpg' },
-  { id: 4, name: 'Francisco Oliveira', status: 'Владелец Guru Canggu', image: 'https://static.tildacdn.com/tild3038-3566-4338-a434-333236653135/IMG_0549.jpeg' }
+  { id: 4, name: 'Francisco Oliveira', status: 'Guru Canggu Owner', image: 'https://static.tildacdn.com/tild3038-3566-4338-a434-333236653135/IMG_0549.jpeg' },
+  { id: 5, name: 'Александр Г.', status: 'Акционер холдинга', image: 'https://static.tildacdn.com/tild3431-3165-4339-b962-636261623136/04m_shootjpg.jpg' },
+  { id: 6, name: 'Елена В.', status: 'Основатель бренда', image: 'https://static.tildacdn.com/tild3164-3665-4161-b130-363539656534/01f_shoot.jpg' },
+  { id: 7, name: 'Виктор П.', status: 'Управляющий партнер', image: 'https://static.tildacdn.com/tild6361-3965-4139-b864-343530366166/03f_shoot.jpg' },
+  { id: 8, name: 'Марина С.', status: 'IT Визионер', image: 'https://static.tildacdn.com/tild6162-3664-4662-b939-663265613337/02f_shoot.jpg' }
 ];
 
 export const TESTIMONIALS: Testimonial[] = [
@@ -46,25 +50,25 @@ export const TESTIMONIALS: Testimonial[] = [
   { id: 4, name: 'Роман Тарасенко', description: 'Маркетолог №1, стратег, \nавтор бестселлеров.', videoUrl: 'https://rutube.ru/play/embed/28c6c2f35ca1d859ce6a037c859a6e26' }
 ];
 
-// Added TRANSFORMATION_DATA to resolve import errors in components/Transformation.tsx and MasterPage.tsx
-export const TRANSFORMATION_DATA: TransformationPhase[] = [
+export const TRANSFORMATION_DATA: TransformationStep[] = [
   {
     id: '1',
-    label: 'PHASE 01: ORIGIN',
-    image: 'https://static.tildacdn.com/tild6639-6330-4565-a437-643966646532/1766840175558.jpg'
+    label: 'ФАЗА 01: АНАЛИЗ',
+    image: 'https://static.tildacdn.com/tild6136-6262-4163-b735-366635366631/03f_shoot.jpg'
   },
   {
     id: '2',
-    label: 'PHASE 02: PROCESS',
-    image: 'https://static.tildacdn.com/tild3034-3933-4335-a564-616461353762/IMG_9206.jpg'
+    label: 'ФАЗА 02: СТРАТЕГИЯ',
+    image: 'https://static.tildacdn.com/tild3739-6266-4566-b835-376632613633/04m_shootjpg.jpg'
   },
   {
     id: '3',
-    label: 'PHASE 03: EXEC PROTOCOL',
-    image: 'https://static.tildacdn.com/tild3166-3231-4264-a166-633762613832/Generated_Image_Dece.jpg',
+    label: 'ФАЗА 03: РЕЗУЛЬТАТ',
+    image: 'https://static.tildacdn.com/tild6337-6235-4930-b437-313639343066/03f_executive_image1.jpg',
     subPhases: [
-      { id: 'a', label: 'LORO PIANA', image: 'https://static.tildacdn.com/tild3166-3231-4264-a166-633762613832/Generated_Image_Dece.jpg' },
-      { id: 'b', label: 'BRIONI', image: 'https://static3.tildacdn.com/tild3863-3864-4336-b531-626366353438/Generated_Image_Dece.jpg' }
+      { id: 'a', label: 'QUIET LUXURY', image: 'https://static.tildacdn.com/tild3166-3231-4264-a166-633762613832/Generated_Image_Dece.jpg' },
+      { id: 'b', label: 'BRIONI STYLE', image: 'https://static3.tildacdn.com/tild3863-3864-4336-b531-626366353438/Generated_Image_Dece.jpg' },
+      { id: 'c', label: 'OLD MONEY', image: 'https://static.tildacdn.com/tild6562-6131-4363-a434-386139393833/02f_executive_image.jpg' }
     ]
   }
 ];

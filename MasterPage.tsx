@@ -1,90 +1,36 @@
+
 import React, { useState, useEffect, useRef } from 'react';
-import { GoogleGenAI, Type } from "@google/genai";
+import { COMPARISON_COLLECTION, AUTHORITY_ARCHIVE, TESTIMONIALS } from './constants';
+import { ComparisonItem, GalleryItem, Testimonial } from './types';
 
 /**
  * =============================================================================
- * 1. DATA TYPES
+ * SUB-COMPONENTS
  * =============================================================================
  */
 
-export interface GalleryItem {
-  id: number;
-  name: string;
-  status: string;
-  image: string;
-}
-
-export interface Testimonial {
-  id: number;
-  name: string;
-  description: string;
-  videoUrl: string;
-}
-
-export interface ComparisonItem {
-  id: number;
-  title: string;
-  category: string;
-  before: string;
-  after: string;
-}
-
-/**
- * =============================================================================
- * 2. CONSTANTS & DATA
- * =============================================================================
- */
-
-const COMPARISON_COLLECTION: ComparisonItem[] = [
-  {
-    id: 1,
-    title: "Chanel Heritage",
-    category: "ЛЮКС-ПОРТРЕТ",
-    before: "https://static.tildacdn.com/tild3431-6234-4963-a633-663036666465/01f_shoot.jpg",
-    after: "https://static.tildacdn.com/tild3038-3634-4939-a564-626634393139/01f_executive_image.jpg"
-  },
-  {
-    id: 2,
-    title: "Editorial Presence",
-    category: "КОРПОРАТИВНЫЙ ЛИДЕР",
-    before: "https://static.tildacdn.com/tild3230-3233-4234-a330-643962316630/02f_shoot.jpg",
-    after: "https://static.tildacdn.com/tild6562-6131-4363-a434-386139393833/02f_executive_image.jpg"
-  },
-  {
-    id: 3,
-    title: "Global Executive",
-    category: "ОБРАЗ ВЛАСТИ",
-    before: "https://static.tildacdn.com/tild6136-6262-4163-b735-366635366631/03f_shoot.jpg",
-    after: "https://static.tildacdn.com/tild6337-6235-4930-b437-313639343066/03f_executive_image1.jpg"
-  },
-  {
-    id: 4,
-    title: "Pinstripe Authority",
-    category: "CEO МАНИФЕСТ",
-    before: "https://static.tildacdn.com/tild3739-6266-4566-b835-376632613633/04m_shootjpg.jpg",
-    after: "https://static.tildacdn.com/tild3065-3539-4135-a636-313232303362/04m_executive_image1.jpg"
-  }
-];
-
-const AUTHORITY_ARCHIVE: GalleryItem[] = [
-  { id: 1, name: 'Ирина Хакамада', status: 'Символ лидерства', image: 'https://static.tildacdn.com/tild6336-6461-4239-a533-636461316432/_MG_4315.jpg' },
-  { id: 2, name: 'Михаил Федоренко', status: 'Госсоветник 2 класса', image: 'https://static.tildacdn.com/tild3065-6262-4766-b635-353233626138/IMG_4309-Edit.jpg' },
-  { id: 3, name: 'Аделия Петросян', status: 'Чемпионка РФ', image: 'https://static.tildacdn.com/tild3436-3831-4433-b630-313939653736/IMG_3426-Edit.jpg' },
-  { id: 4, name: 'Francisco Oliveira', status: 'Guru Canggu Owner', image: 'https://static.tildacdn.com/tild3038-3566-4338-a434-333236653135/IMG_0549.jpeg' }
-];
-
-const TESTIMONIALS: Testimonial[] = [
-  { id: 1, name: 'Ирина Хакамада', description: 'Бизнес-спикер, \nпубличный деятель.', videoUrl: 'https://rutube.ru/play/embed/ef3ddf744edc99e9d1dbeb3f92540683' },
-  { id: 2, name: 'Олег Конников', description: 'Звездный стоматолог, \nэксперт федеральных ТВ-проектов.', videoUrl: 'https://rutube.ru/play/embed/ffb709841bf1ffda248861c8f9c5f41d' },
-  { id: 3, name: 'Lex Borealis', description: 'Международные юристы: \nЛондон, Дубай, Москва.', videoUrl: 'https://rutube.ru/play/embed/9ee74e5c2e6ddeb2d0bb97e257cae03b' },
-  { id: 4, name: 'Роман Тарасенко', description: 'Маркетолог №1, стратег, \nавтор бестселлеров.', videoUrl: 'https://rutube.ru/play/embed/28c6c2f35ca1d859ce6a037c859a6e26' }
-];
-
-/**
- * =============================================================================
- * 3. UI COMPONENTS
- * =============================================================================
- */
+const FAQAccordionItem: React.FC<{ question: string; answer: string }> = ({ question, answer }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  return (
+    <div className="border-b border-white/10 overflow-hidden">
+      <button 
+        onClick={() => setIsOpen(!isOpen)} 
+        className="w-full py-8 md:py-10 flex justify-between items-center text-left group hover:text-accent transition-colors duration-500"
+      >
+        <h4 className="font-serif text-xl md:text-3xl italic tracking-tight">{question}</h4>
+        <div className={`relative w-6 h-6 flex items-center justify-center transition-transform duration-500 ${isOpen ? 'rotate-45' : ''}`}>
+          <span className="absolute w-full h-[1px] bg-accent"></span>
+          <span className="absolute w-[1px] h-full bg-accent"></span>
+        </div>
+      </button>
+      <div className={`transition-all duration-700 ease-in-out overflow-hidden ${isOpen ? 'max-h-[500px] opacity-100 pb-10' : 'max-h-0 opacity-0'}`}>
+        <p className="text-white/40 text-lg md:text-xl font-light leading-relaxed max-w-3xl">
+          {answer}
+        </p>
+      </div>
+    </div>
+  );
+};
 
 const ComparisonCard: React.FC<{ item: ComparisonItem; isLCP?: boolean }> = ({ item, isLCP }) => {
   const [showBefore, setShowBefore] = useState(false);
@@ -155,27 +101,34 @@ const SmartGallery: React.FC<{
 
   return (
     <section id={id} className="py-24 md:py-48 bg-[#0a0a0a] border-b border-white/5 overflow-hidden">
-      <div className="container mx-auto px-6">
-        <div className="max-w-4xl mb-16 md:mb-28 fade-up text-left">
+      <div className="container mx-auto">
+        <div className="px-6 max-w-4xl mb-16 md:mb-28 fade-up text-left">
           <span className="text-accent text-[11px] font-black uppercase tracking-[0.5em] block mb-8">{subtitle}</span>
           {title && <h2 className="font-serif text-[42px] md:text-7xl text-white tracking-tighter leading-tight italic">{title}</h2>}
         </div>
+        
         <div className="relative">
           <div 
             ref={scrollRef}
             onScroll={handleScroll}
-            className="flex md:grid md:grid-cols-4 gap-6 md:gap-12 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-12"
+            className="flex md:grid md:grid-cols-4 gap-4 md:gap-12 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-12 px-6 md:px-0"
           >
             {items.map((item, index) => (
-              <div key={index} className="min-w-[85vw] md:min-w-0 snap-center group/card cursor-pointer">
+              <div key={index} className="min-w-[78vw] md:min-w-0 snap-center group/card cursor-pointer">
                 {type === 'comparison' && <ComparisonCard item={item as ComparisonItem} isLCP={isLCP && index === 0} />}
                 {type === 'photo' && <PhotoCard item={item as GalleryItem} isLCP={isLCP && index === 0} />}
                 {type === 'video' && <VideoCard item={item as Testimonial} />}
               </div>
             ))}
           </div>
-          <div className="md:hidden h-[1px] w-full bg-white/10 relative mt-4">
-            <div className="absolute top-0 left-0 h-full bg-accent transition-all duration-300" style={{ width: `${progress}%` }} />
+          
+          <div className="md:hidden px-6 mt-4">
+            <div className="h-[1px] w-full bg-white/10 relative">
+              <div 
+                className="absolute top-0 left-0 h-full bg-accent transition-all duration-300" 
+                style={{ width: `${progress}%` }} 
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -183,93 +136,9 @@ const SmartGallery: React.FC<{
   );
 };
 
-const TransformationMetamorphosis: React.FC = () => {
-  const [activeStage, setActiveStage] = useState(0);
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const [progress, setProgress] = useState(0);
-
-  const stages = [
-    { label: 'ASSET', title: 'Loro Piana', desc: 'Бескомпромиссный статус. Высший уровень визуального капитала.', img: 'https://static.tildacdn.com/tild3166-3231-4264-a166-633762613832/Generated_Image_Dece.jpg' },
-    { label: 'STATUS', title: 'Brioni', desc: 'Доминантная уверенность. Сила, которую не нужно доказывать.', img: 'https://static3.tildacdn.com/tild3863-3864-4336-b531-626366353438/Generated_Image_Dece.jpg' },
-    { label: 'ORIGIN', title: 'В жизни', desc: 'Точка входа. То, как вас видит мир без вмешательства протокола.', img: 'https://static.tildacdn.com/tild6639-6330-4565-a437-643966646532/1766840175558.jpg' },
-    { label: 'PROCESS', title: 'Протокол', desc: '60 минут инженерной режиссуры. Механика создания образа.', img: 'https://static.tildacdn.com/tild3034-3933-4335-a564-616461353762/IMG_9206.jpg' }
-  ];
-
-  const handleScroll = () => {
-    if (scrollRef.current) {
-      const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
-      const currentProgress = (scrollLeft / (scrollWidth - clientWidth)) * 100;
-      setProgress(currentProgress);
-    }
-  };
-
-  return (
-    <div className="relative bg-black text-white px-0 md:px-4 overflow-hidden fade-up">
-      <div className="hidden md:grid max-w-6xl mx-auto md:grid-cols-12 gap-12 items-center py-24 md:py-32">
-        <div className="w-full md:col-span-7 lg:col-span-8 relative">
-          <div className="relative md:h-[720px] overflow-hidden border border-white/10 shadow-3xl bg-dark">
-            {stages.map((stage, idx) => (
-              <img 
-                key={idx} 
-                src={stage.img} 
-                alt={stage.title} 
-                className={`absolute inset-0 w-full h-full object-cover transition-all duration-[1000ms] ${activeStage === idx ? 'opacity-100 scale-100' : 'opacity-0 scale-110'}`} 
-              />
-            ))}
-            <div className="absolute inset-0 border-[20px] border-black/20 pointer-events-none" />
-          </div>
-        </div>
-        <div className="w-full md:col-span-5 lg:col-span-4 flex flex-col justify-center space-y-10 text-left md:h-[720px]">
-          <div className="space-y-10">
-            {stages.map((stage, idx) => (
-              <div 
-                key={idx} 
-                className={`transition-all duration-700 cursor-pointer group ${activeStage === idx ? 'opacity-100 translate-x-4' : 'opacity-20 hover:opacity-50'}`} 
-                onClick={() => setActiveStage(idx)}
-              >
-                <span className="text-[10px] font-bold tracking-[0.4em] text-accent uppercase block mb-2 group-hover:translate-x-1 transition-transform">
-                  0{idx + 1} — {stage.label}
-                </span>
-                <h3 className="text-2xl lg:text-3xl font-serif italic mb-3">{stage.title}</h3>
-                {activeStage === idx && (
-                  <p className="text-sm text-white/40 font-light leading-relaxed animate-slide-right max-w-[280px]">
-                    {stage.desc}
-                  </p>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-      <div className="md:hidden">
-        <div ref={scrollRef} onScroll={handleScroll} className="flex gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-12 px-6">
-          {stages.map((stage, idx) => (
-            <div key={idx} className="min-w-[85vw] snap-center space-y-6">
-              <div className="aspect-[3/4] overflow-hidden border border-white/5 bg-black relative">
-                <img src={stage.img} alt={stage.title} className="w-full h-full object-cover" />
-                <div className="absolute top-4 right-4 z-20">
-                  <div className="px-3 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-[8px] font-black uppercase tracking-widest text-accent">
-                    PHASE 0{idx + 1}
-                  </div>
-                </div>
-              </div>
-              <div className="space-y-2 text-left">
-                <span className="text-accent text-[9px] uppercase font-bold tracking-[0.3em] block">{stage.label}</span>
-                <h4 className="font-serif text-2xl text-white">{stage.title}</h4>
-                <p className="text-white/40 text-[13px] font-light leading-relaxed">{stage.desc}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-        <div className="px-6 pb-24"><div className="h-[1px] w-full bg-white/10 relative"><div className="absolute top-0 left-0 h-full bg-accent transition-all duration-300" style={{ width: `${progress}%` }} /></div></div>
-      </div>
-    </div>
-  );
-};
-
 /**
  * =============================================================================
- * 4. MASTER PAGE COMPONENT
+ * MASTER PAGE
  * =============================================================================
  */
 
@@ -287,7 +156,7 @@ const MasterPage: React.FC = () => {
 
   const navLinks = [
     { id: 'manifesto', label: 'Метод' },
-    { id: 'global-stage', label: 'Global Stage' },
+    { id: 'global-stage', label: 'Визионеры' },
     { id: 'archive', label: 'Портфолио' },
     { id: 'portfolio', label: 'Результаты' },
     { id: 'pricing', label: 'Инвестиция' }
@@ -330,6 +199,16 @@ const MasterPage: React.FC = () => {
 
       {/* MOBILE MENU OVERLAY */}
       <div className={`fixed inset-0 z-[1100] bg-dark/98 backdrop-blur-3xl transition-all duration-700 flex flex-col items-center justify-center gap-10 ${isMenuOpen ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-full pointer-events-none'}`}>
+        
+        {/* Fix typo: replaced setIsOpen(false) with setIsMenuOpen(false) */}
+        <button 
+          onClick={() => setIsMenuOpen(false)} 
+          className="absolute top-6 right-6 w-12 h-12 flex items-center justify-center group"
+        >
+          <span className="absolute w-8 h-[2px] bg-accent rotate-45 group-hover:bg-white transition-all duration-300"></span>
+          <span className="absolute w-8 h-[2px] bg-accent -rotate-45 group-hover:bg-white transition-all duration-300"></span>
+        </button>
+
         {navLinks.map(l => (
           <a key={l.id} href={`#${l.id}`} onClick={() => setIsMenuOpen(false)} className="font-serif text-4xl text-white hover:text-accent transition-colors">
             {l.label}
@@ -343,63 +222,32 @@ const MasterPage: React.FC = () => {
       </div>
 
       <main>
-        {/* HERO SECTION */}
+        {/* HERO */}
         <section className="relative h-screen flex flex-col justify-center overflow-hidden">
-          {/* IMAGE - OPACITY 100 */}
-          <img
-            src="https://static.tildacdn.com/tild3166-3265-4934-b662-326261396266/_B4A6054-Edit.jpg"
-            alt=""
-            className="absolute inset-0 w-full h-full object-cover object-top opacity-100"
-          />
-          {/* GRADIENTS */}
+          <img src="https://static.tildacdn.com/tild3166-3265-4934-b662-326261396266/_B4A6054-Edit.jpg" alt="" className="absolute inset-0 w-full h-full object-cover object-top opacity-100" />
           <div className="absolute inset-0 bg-gradient-to-b from-dark/30 via-dark/50 to-dark" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_35%_30%,rgba(197,160,89,0.1),transparent_60%)]" />
 
-          {/* CONTENT - OFFSET +30PX FOR MOBILE READABILITY */}
           <div className="container mx-auto px-6 relative z-10 text-left transform translate-y-[30px] md:translate-y-0">
             <div className="max-w-4xl">
-              <span className="text-accent text-[10px] font-bold tracking-[6px] uppercase border-l border-accent/60 pl-6 mb-8 block leading-none">
-                ПРОТОКОЛ БЕЗУПРЕЧНОСТИ™
-              </span>
-
-              <h1 className="font-serif text-[42px] leading-[1.1] md:text-8xl lg:text-9xl text-white mb-8 tracking-tight">
-                Ваш имидж — это <br />
-                актив или пассив? <br />
-                <span className="text-accent italic font-light gold-gradient-text">
-                  Начните извлекать прибыль.
-                </span>
-              </h1>
-
-              <div className="max-w-4xl mb-12 text-sm md:text-xl text-white/90 font-light leading-relaxed">
+              <span className="text-accent text-[10px] font-bold tracking-[6px] uppercase border-l border-accent/60 pl-6 mb-6 md:mb-8 block leading-none">ПРОТОКОЛ БЕЗУПРЕЧНОСТИ™</span>
+              <h1 className="font-serif text-[42px] leading-[1.1] md:text-6xl lg:text-7xl text-white mb-6 md:mb-8 tracking-tight">Ваш имидж — это <br />актив или пассив? <br /><span className="text-accent italic font-light gold-gradient-text">Начните извлекать прибыль.</span></h1>
+              <div className="max-w-4xl mb-8 md:mb-12 text-sm md:text-xl text-white/90 font-light leading-relaxed">
                 <span className="text-[15px] md:text-lg">Визуальный капитал</span> <br /> 
                 <span className="text-[15px] md:text-lg">уровня Forbes.</span> <br />
-                Математическая точность образа. <br />
-                Вечная эстетика.
+                Математическая точность образа. Вечная эстетика.
               </div>
-
-              <div className="flex flex-col sm:flex-row gap-6">
-                <a
-                  href="tel:+79852246789"
-                  className="bg-accent text-dark px-14 py-6 text-[11px] font-black uppercase tracking-widest hover:bg-white transition-all shadow-2xl text-center"
-                >
-                  📞 +7 985 224-67-89
-                </a>
-
-                <a
-                  href="#portfolio"
-                  className="border border-white/30 text-white px-14 py-6 text-[11px] font-black uppercase tracking-widest hover:bg-white/5 transition-all text-center"
-                >
-                  ДОКАЗАТЕЛЬСТВА
-                </a>
+              <div className="flex flex-col sm:flex-row gap-4 md:gap-6">
+                <a href="tel:+79852246789" className="bg-accent text-dark px-10 md:px-14 py-4 md:py-6 text-[11px] font-black uppercase tracking-widest hover:bg-white transition-all shadow-2xl text-center">📞 +7 985 224-67-89</a>
+                <a href="#archive" className="border border-white/30 text-white px-10 md:px-14 py-4 md:py-6 text-[11px] font-black uppercase tracking-widest hover:bg-white/5 transition-all text-center">ДОКАЗАТЕЛЬСТВА</a>
               </div>
             </div>
           </div>
         </section>
 
-        {/* WOW COLLECTION (SHOWCASE) -> ДОКАЗАТЕЛЬСТВА */}
         <SmartGallery id="archive" title="Трансформация Статуса" subtitle="ДОКАЗАТЕЛЬСТВА" type="comparison" items={COMPARISON_COLLECTION} isLCP={true} />
 
-        {/* ABOUT SECTION */}
+        {/* ABOUT */}
         <section className="py-24 md:py-40 bg-[#0a0a0a] border-b border-white/5" id="about">
           <div className="container mx-auto px-6 text-left">
             <div className="flex flex-col lg:flex-row gap-16 lg:gap-32 items-center lg:items-start">
@@ -423,104 +271,58 @@ const MasterPage: React.FC = () => {
           </div>
         </section>
 
-        {/* METAMORPHOSIS - UPDATED HEADER AND TEXT LAYOUT */}
-        <section id="manifesto" className="py-24 md:py-48 bg-[#080808] border-b border-white/5">
-          <div className="container mx-auto px-6 text-center">
-            <div className="mb-16 md:mb-28 max-w-4xl mx-auto fade-up">
-              <span className="text-accent text-[11px] font-black uppercase tracking-widest mb-8 block">ПРОТОКОЛ БЕЗУПРЕЧНОСТИ™</span>
-              <h2 className="font-serif text-[36px] md:text-6xl text-white leading-tight mb-10 italic">
-                Визуальный капитал <br />
-                <span className="gold-gradient-text">уровня Forbes</span>
-              </h2>
-              <div className="text-white/40 text-sm md:text-base font-light max-w-2xl mx-auto leading-relaxed">
-                Без стилистов, без суеты, <br />
-                без компромиссов.
-              </div>
-            </div>
-            <TransformationMetamorphosis />
-          </div>
-        </section>
-
-        {/* GLOBAL STAGE (PORTFOLIO) -> Title: Визионеры */}
         <SmartGallery id="global-stage" title="Визионеры" subtitle="ПОРТФОЛИО" type="photo" items={AUTHORITY_ARCHIVE} />
 
-        {/* SOCIAL PROOF (TESTIMONIALS) -> Послушайте сами */}
         <SmartGallery id="portfolio" title="Послушайте сами" subtitle="ДОКАЗАТЕЛЬСТВА" type="video" items={TESTIMONIALS} />
 
-        {/* FAQ SECTION -> ВОЗРАЖЕНИЯ (Updated with User Content) */}
-        <section className="py-24 md:py-32 bg-dark" id="faq">
-          <div className="container mx-auto px-6 text-left">
-            <div className="mb-16 md:mb-24 text-center fade-up">
-              <span className="text-accent text-[11px] font-black tracking-[5px] uppercase block mb-6">
-                ВОЗРАЖЕНИЯ
-              </span>
-              <h2 className="font-serif text-4xl md:text-6xl text-white tracking-tight italic">
-                Что вас останавливает?
-              </h2>
+        {/* FAQ ACCORDION */}
+        <section className="py-24 md:py-48 bg-dark" id="faq">
+          <div className="container mx-auto px-6">
+            <div className="mb-16 md:mb-32 text-center fade-up">
+              <span className="text-accent text-[11px] font-black tracking-[5px] uppercase block mb-6">ВОЗРАЖЕНИЯ</span>
+              <h2 className="font-serif text-4xl md:text-7xl text-white tracking-tight italic">Что вас останавливает?</h2>
             </div>
-            <div className="max-w-4xl mx-auto fade-up space-y-4">
-              {[
-                { 
-                  q: "Сколько времени займет сессия?", 
-                  a: "Обычно процесс занимает до 60 минут, но мы не привязаны к таймеру. Мы работаем до тех пор, пока не добьемся кадра, который станет вашим эталоном. Важен результат, а не время на часах." 
-                },
-                { 
-                  q: "Не будет ли портрет выглядеть искусственно?", 
-                  a: "Мы не меняем вашу личность. Глаза, мимика и взгляд остаются нетронутыми. AI используется только как инструмент «цифрового пошива» для создания безупречной одежды и управления светом." 
-                },
-                { 
-                  q: "Насколько это конфиденциально?", 
-                  a: "Мы подписываем строгий NDA. Ваши материалы хранятся на защищенных серверах и безвозвратно удаляются после завершения проекта. Ваша приватность — часть протокола." 
-                },
-                { 
-                  q: "Что если я не умею позировать?", 
-                  a: "Вам и не нужно. Моя работа — режиссура состояния. Мы просто общаемся в комфортном ритме, пока я фиксирую вашу естественную харизму. Вы будете собой, но в лучшем воплощении." 
-                },
-                { 
-                  q: "Для чего подходят эти фото?", 
-                  a: "Вы получаете активы в сверхвысоком разрешении. Они безупречны для обложек бизнес-глянца, интервью, личных экосистем и широкоформатной печати." 
-                }
-              ].map((item, i) => (
-                <div key={i} className="border-b border-white/10 pb-4">
-                  <h4 className="font-serif text-2xl text-white mb-4 italic">{item.q}</h4>
-                  <p className="text-white/40 text-lg font-light leading-relaxed">{item.a}</p>
+            <div className="max-w-4xl mx-auto fade-up">
+              <FAQAccordionItem question="Сколько времени займет сессия?" answer="Обычно процесс занимает до 60 минут, но мы не привязаны к таймеру. Мы работаем до тех пор, пока не добьемся кадра, который станет вашим эталоном. Важен результат, а не время на часах." />
+              <FAQAccordionItem question="Не будет ли портрет выглядеть искусственно?" answer="Мы не меняем вашу личность. Глаза, мимика и взгляд остаются нетронутыми. AI используется только как инструмент «цифрового пошива» для создания безупречной одежды и управления светом." />
+              <FAQAccordionItem question="Насколько это конфиденциально?" answer="Мы подписываем строгий NDA. Ваши материалы хранятся на защищенных серверах и безвозвратно удаляются после завершения проекта. Ваша приватность — часть протокола." />
+              <FAQAccordionItem question="Что если я не умею позировать?" answer="Вам и не нужно. Моя работа — режиссура состояния. Мы просто общаемся в комфортном ритме, пока я фиксирую вашу естественную харизму. Вы будете собой, но в лучшем воплощении." />
+              <FAQAccordionItem question="Для чего подходят эти фото?" answer="Вы получаете активы в сверхвысоком разрешении. Они безупречны для обложек бизнес-глянца, интервью, личных экосистем и широкоформатной печати." />
+            </div>
+          </div>
+        </section>
+
+        {/* PRICING MOCKUP */}
+        <section id="pricing" className="py-24 md:py-48 bg-dark">
+          <div className="container mx-auto px-6">
+            <div className="max-w-4xl mx-auto border border-accent/20 bg-card p-10 md:p-24 relative shadow-3xl text-center">
+              <span className="text-accent text-[11px] font-black tracking-[0.4em] uppercase block mb-12">ПРОТОКОЛ AI-EXECUTIVE</span>
+              <div className="font-serif text-6xl md:text-[100px] text-white leading-none mb-20 tracking-tighter">250 000 ₽</div>
+              <div className="space-y-12 text-left mb-20">
+                <div className="space-y-3 pb-8 border-b border-white/5">
+                  <h4 className="font-serif text-2xl text-white italic">Выездная съемка в любой точке мира*</h4>
+                  <p className="text-white/40 text-sm md:text-base font-light leading-relaxed">Я привожу мобильную студию и физический Fine Art холст прямо к вам. Никаких поездок и пробок.</p>
                 </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* CUSTOM GUARANTEE SECTION */}
-        <section className="py-24 md:py-32 bg-dark relative overflow-hidden">
-          <div className="container mx-auto px-6 text-center relative z-10">
-            <div className="max-w-3xl mx-auto fade-up">
-              <span className="text-accent text-[11px] font-black tracking-[5px] uppercase block mb-6">
-                МОЁ СЛОВО
-              </span>
-              <h2 className="font-serif text-4xl md:text-6xl text-white tracking-tight italic mb-8">
-                Безусловная гарантия
-              </h2>
-              <p className="text-lg md:text-xl text-white/60 leading-relaxed">
-                Если на этапе превью вы не увидите масштаб своей личности — проект останавливается, оплата не взимается. <br />
-                Я беру все риски на себя.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* PRICING SECTION */}
-        <section id="pricing" className="py-32 md:py-64 bg-dark">
-          <div className="container mx-auto px-6 text-center">
-            <div className="max-w-6xl mx-auto border border-accent/20 bg-card p-12 md:p-32 relative shadow-3xl">
-              <span className="text-accent/50 text-[11px] font-black tracking-[0.5em] uppercase block mb-12">Инвестиция в статус</span>
-              <div className="font-serif text-6xl md:text-[100px] text-white gold-gradient-text mb-12">250 000 ₽</div>
-              <a href="http://t.me/latypovvalery" target="_blank" className="block w-full max-w-sm mx-auto bg-dark border border-accent/40 text-accent py-8 text-[11px] font-black uppercase tracking-widest hover:bg-accent hover:text-dark transition-all">ЗАБРОНИРОВАТЬ СЛОТ</a>
+                <div className="space-y-3 pb-8 border-b border-white/5">
+                  <h4 className="font-serif text-2xl text-white italic">Цифровой пошив гардероба (Old Money style)</h4>
+                  <p className="text-white/40 text-sm md:text-base font-light leading-relaxed">Снимайтесь в комфортной футболке. Мы переоденем вас в цифровые модели Brioni или Loro Piana. Лицо остается нетронутым.</p>
+                </div>
+                <div className="space-y-3 pb-8 border-b border-white/5">
+                  <h4 className="font-serif text-2xl text-white italic">Физический Fine Art холст</h4>
+                  <p className="text-white/40 text-sm md:text-base font-light leading-relaxed">Я привожу с собой настоящий холст музейного качества. Это дает неповторимую глубину и статус.</p>
+                </div>
+                <div className="space-y-3">
+                  <h4 className="font-serif text-2xl text-white italic">Готовность: 24 часа</h4>
+                  <p className="text-white/40 text-sm md:text-base font-light leading-relaxed">Результат завтра к завтраку. Скорость без компромиссов в качестве.</p>
+                </div>
+              </div>
+              <a href="http://t.me/latypovvalery" target="_blank" className="block w-full border border-accent/40 text-accent py-8 text-[11px] font-black uppercase tracking-widest hover:bg-accent hover:text-dark transition-all duration-500 text-center">ЗАБРОНИРОВАТЬ СЛОТ</a>
+              <div className="mt-16 text-[9px] text-white/20 uppercase tracking-[0.2em] font-medium italic">*ЛОГИСТИКА ВЫЕЗДА ОБСУЖДАЕТСЯ ИНДИВИДУАЛЬНО. ТОЛЬКО 2 ПРОЕКТА В МЕСЯЦ.</div>
             </div>
           </div>
         </section>
       </main>
 
-      {/* FOOTER */}
       <footer className="py-24 bg-black text-center border-t border-white/5">
         <div className="font-serif text-2xl md:text-5xl tracking-[0.5em] text-white/90 mb-6 uppercase">ВАЛЕРИЙ ЛАТЫПОВ</div>
         <div className="text-accent text-[9px] font-black tracking-widest uppercase opacity-80">Executive Protocol™ © 2026</div>

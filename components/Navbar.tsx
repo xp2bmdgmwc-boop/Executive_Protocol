@@ -25,7 +25,7 @@ const Navbar: React.FC = () => {
           
           {/* LOGO */}
           <div className="flex flex-col items-start leading-none group cursor-pointer relative z-[1200]">
-            <div className="font-serif text-[15px] md:text-xl font-semibold text-white tracking-[3px] uppercase group-hover:text-accent transition-colors">VALERY LATYPOV</div>
+            <div className="font-serif text-[15px] md:text-xl font-semibold text-white tracking-[3px] uppercase group-hover:text-accent transition-colors">ВАЛЕРИЙ ЛАТЫПОВ</div>
             <div className="text-accent uppercase tracking-[1px] text-[10px] md:text-xs font-black mt-1">Executive Protocol™</div>
           </div>
           

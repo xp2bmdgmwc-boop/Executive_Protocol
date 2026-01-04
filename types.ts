@@ -1,9 +1,3 @@
-export interface TransformationPhase {
-  id: string;
-  label: string;
-  image: string;
-  subPhases?: { id: string; label: string; image: string }[];
-}
 
 export interface GalleryItem {
   id: number;
@@ -25,4 +19,15 @@ export interface ComparisonItem {
   category: string;
   before: string;
   after: string;
+}
+
+export interface TransformationStep {
+  id: string;
+  label: string;
+  image: string;
+  subPhases?: Array<{
+    id: string;
+    label: string;
+    image: string;
+  }>;
 }
