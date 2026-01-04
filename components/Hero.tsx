@@ -11,10 +11,8 @@ const Hero: React.FC = () => {
         className="absolute inset-0 w-full h-full object-cover object-top"
       />
 
-      {/* SOFT DARK GRADIENT (NOT KILLING LIGHT) */}
+      {/* GRADIENTS */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/35 to-black/55" />
-
-      {/* LIGHT FOCUS UNDER TEXT */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_35%_30%,rgba(255,255,255,0.18),transparent_60%)]" />
 
       {/* CONTENT */}
@@ -35,23 +33,25 @@ const Hero: React.FC = () => {
 
           <p className="max-w-2xl mb-16 text-lg md:text-2xl text-white/80 font-light leading-relaxed">
             <span className="text-accent font-medium">Executive Protocol™:</span>{' '}
-            Создание визуального капитала уровня Forbes за 60 минут.
-            Математическая точность образа от физика.
+            Визуальный капитал уровня Forbes.{' '}
+            <span className="text-white">
+              Математическая точность образа. Вечная эстетика.
+            </span>
           </p>
 
           <div className="flex flex-col sm:flex-row gap-6">
             <a
-              href="http://t.me/latypovvalery"
+              href="tel:+79852246789"
               className="bg-accent text-dark px-14 py-6 text-[11px] font-black uppercase tracking-widest hover:bg-white transition-all shadow-2xl text-center"
             >
-              ЗАБРОНИРОВАТЬ АУДИТ
+              📞 НАЧАТЬ РАЗГОВОР
             </a>
 
             <a
               href="#archive"
               className="border border-white/30 text-white px-14 py-6 text-[11px] font-black uppercase tracking-widest hover:bg-white/5 transition-all text-center"
             >
-              Портфолио
+              Кремль · BRICS · Олимпиада
             </a>
           </div>
 

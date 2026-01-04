@@ -67,7 +67,7 @@ const ComparisonCard: React.FC<{ item: ComparisonItem; isLCP?: boolean }> = ({ i
       <img src={item.before} alt="Before" className={`absolute inset-0 w-full h-full object-cover transition-all duration-1000 ${showBefore ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`} />
       <div className="absolute top-4 right-4 z-20">
         <div className="px-3 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-[8px] font-black uppercase tracking-widest text-accent">
-          {showBefore ? 'ORIGINAL' : 'PROTOCOL AI'}
+          {showBefore ? 'ИСХОДНАЯ ТОЧКА' : 'ПРОТОКОЛ'}
         </div>
       </div>
       <div className="absolute bottom-0 left-0 w-full p-6 md:p-8 bg-gradient-to-t from-black to-transparent text-left">

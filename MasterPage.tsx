@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { GoogleGenAI, Type } from "@google/genai";
 
 /**
  * =============================================================================
- * ТИПЫ ДАННЫХ
+ * 1. DATA TYPES
  * =============================================================================
  */
 
@@ -30,7 +31,7 @@ export interface ComparisonItem {
 
 /**
  * =============================================================================
- * КОНСТАНТЫ И КОЛЛЕКЦИИ
+ * 2. CONSTANTS & DATA
  * =============================================================================
  */
 
@@ -69,7 +70,7 @@ const AUTHORITY_ARCHIVE: GalleryItem[] = [
   { id: 1, name: 'Ирина Хакамада', status: 'Символ лидерства', image: 'https://static.tildacdn.com/tild6336-6461-4239-a533-636461316432/_MG_4315.jpg' },
   { id: 2, name: 'Михаил Федоренко', status: 'Госсоветник 2 класса', image: 'https://static.tildacdn.com/tild3065-6262-4766-b635-353233626138/IMG_4309-Edit.jpg' },
   { id: 3, name: 'Аделия Петросян', status: 'Чемпионка РФ', image: 'https://static.tildacdn.com/tild3436-3831-4433-b630-313939653736/IMG_3426-Edit.jpg' },
-  { id: 4, name: 'Francisco Oliveira', status: 'Владелец Guru Canggu', image: 'https://static.tildacdn.com/tild3038-3566-4338-a434-333236653135/IMG_0549.jpeg' }
+  { id: 4, name: 'Francisco Oliveira', status: 'Guru Canggu Owner', image: 'https://static.tildacdn.com/tild3038-3566-4338-a434-333236653135/IMG_0549.jpeg' }
 ];
 
 const TESTIMONIALS: Testimonial[] = [
@@ -81,7 +82,7 @@ const TESTIMONIALS: Testimonial[] = [
 
 /**
  * =============================================================================
- * ВСПОМОГАТЕЛЬНЫЕ КОМПОНЕНТЫ ГАЛЕРЕИ
+ * 3. UI COMPONENTS
  * =============================================================================
  */
 
@@ -98,7 +99,7 @@ const ComparisonCard: React.FC<{ item: ComparisonItem; isLCP?: boolean }> = ({ i
       <img src={item.before} alt="Before" className={`absolute inset-0 w-full h-full object-cover transition-all duration-1000 ${showBefore ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`} />
       <div className="absolute top-4 right-4 z-20">
         <div className="px-3 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-[8px] font-black uppercase tracking-widest text-accent">
-          {showBefore ? 'ORIGINAL' : 'PROTOCOL AI'}
+          {showBefore ? 'ИСХОДНАЯ ТОЧКА' : 'ПРОТОКОЛ'}
         </div>
       </div>
       <div className="absolute bottom-0 left-0 w-full p-6 md:p-8 bg-gradient-to-t from-black to-transparent text-left">
@@ -157,9 +158,8 @@ const SmartGallery: React.FC<{
       <div className="container mx-auto px-6">
         <div className="max-w-4xl mb-16 md:mb-28 fade-up text-left">
           <span className="text-accent text-[11px] font-black uppercase tracking-[0.5em] block mb-8">{subtitle}</span>
-          <h2 className="font-serif text-[42px] md:text-7xl text-white tracking-tighter leading-tight italic">{title}</h2>
+          {title && <h2 className="font-serif text-[42px] md:text-7xl text-white tracking-tighter leading-tight italic">{title}</h2>}
         </div>
-
         <div className="relative">
           <div 
             ref={scrollRef}
@@ -174,7 +174,6 @@ const SmartGallery: React.FC<{
               </div>
             ))}
           </div>
-
           <div className="md:hidden h-[1px] w-full bg-white/10 relative mt-4">
             <div className="absolute top-0 left-0 h-full bg-accent transition-all duration-300" style={{ width: `${progress}%` }} />
           </div>
@@ -183,12 +182,6 @@ const SmartGallery: React.FC<{
     </section>
   );
 };
-
-/**
- * =============================================================================
- * SECTION: METAMORPHOSIS (720px Height)
- * =============================================================================
- */
 
 const TransformationMetamorphosis: React.FC = () => {
   const [activeStage, setActiveStage] = useState(0);
@@ -213,7 +206,6 @@ const TransformationMetamorphosis: React.FC = () => {
   return (
     <div className="relative bg-black text-white px-0 md:px-4 overflow-hidden fade-up">
       <div className="hidden md:grid max-w-6xl mx-auto md:grid-cols-12 gap-12 items-center py-24 md:py-32">
-        {/* Fixed 720px Height Block */}
         <div className="w-full md:col-span-7 lg:col-span-8 relative">
           <div className="relative md:h-[720px] overflow-hidden border border-white/10 shadow-3xl bg-dark">
             {stages.map((stage, idx) => (
@@ -227,7 +219,6 @@ const TransformationMetamorphosis: React.FC = () => {
             <div className="absolute inset-0 border-[20px] border-black/20 pointer-events-none" />
           </div>
         </div>
-
         <div className="w-full md:col-span-5 lg:col-span-4 flex flex-col justify-center space-y-10 text-left md:h-[720px]">
           <div className="space-y-10">
             {stages.map((stage, idx) => (
@@ -250,8 +241,6 @@ const TransformationMetamorphosis: React.FC = () => {
           </div>
         </div>
       </div>
-
-      {/* MOBILE GALLERY */}
       <div className="md:hidden">
         <div ref={scrollRef} onScroll={handleScroll} className="flex gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-12 px-6">
           {stages.map((stage, idx) => (
@@ -280,7 +269,7 @@ const TransformationMetamorphosis: React.FC = () => {
 
 /**
  * =============================================================================
- * ГЛАВНАЯ СБОРКА MASTER PAGE
+ * 4. MASTER PAGE COMPONENT
  * =============================================================================
  */
 
@@ -305,17 +294,15 @@ const MasterPage: React.FC = () => {
   ];
 
   return (
-    <div className="bg-dark text-white selection:bg-accent/30 selection:text-white min-h-screen font-sans">
+    <div className="bg-dark text-white selection:bg-accent/30 selection:text-white min-h-screen font-sans overflow-x-hidden">
       
       {/* NAVBAR */}
       <header className={`fixed top-0 left-0 w-full h-20 md:h-24 z-[1000] transition-all duration-700 flex items-center border-b ${scrolled ? 'bg-[#0a0a0a]/98 border-accent/20 shadow-2xl' : 'bg-transparent border-white/5'} backdrop-blur-xl`}>
         <div className="container mx-auto px-6 flex justify-between items-center w-full relative">
-          
           <div className="flex flex-col items-start leading-none group cursor-pointer relative z-[1200]">
-            <div className="font-serif text-[15px] md:text-xl font-semibold text-white tracking-[3px] uppercase group-hover:text-accent transition-colors">VALERY LATYPOV</div>
+            <div className="font-serif text-[15px] md:text-xl font-semibold text-white tracking-[3px] uppercase group-hover:text-accent transition-colors">ВАЛЕРИЙ ЛАТЫПОВ</div>
             <div className="text-accent uppercase tracking-[1px] text-[10px] md:text-xs font-black mt-1">Executive Protocol™</div>
           </div>
-          
           <nav className="hidden lg:flex gap-10 absolute left-1/2 -translate-x-1/2">
             {navLinks.map((link) => (
               <a key={link.id} href={`#${link.id}`} className="text-[10px] uppercase tracking-[3px] font-bold text-white/60 hover:text-accent transition-all">
@@ -323,17 +310,16 @@ const MasterPage: React.FC = () => {
               </a>
             ))}
           </nav>
-          
           <div className="hidden lg:flex gap-4">
             <a href="tel:+79852246789" className="bg-accent text-dark px-10 py-3 text-[10px] font-black tracking-[3px] uppercase hover:bg-white transition-all">
               📞 ПОЗВОНИТЬ
             </a>
           </div>
-
-          {/* HAMBURGER TO CROSS (ANIMATED) */}
+          
           <button 
             onClick={() => setIsMenuOpen(!isMenuOpen)} 
             className="lg:hidden relative z-[1300] w-10 h-10 flex flex-col items-center justify-center gap-[6px]"
+            aria-label={isMenuOpen ? "Закрыть меню" : "Открыть меню"}
           >
             <span className={`block h-[2px] bg-accent transition-all duration-500 ease-in-out ${isMenuOpen ? 'w-8 rotate-45 translate-y-[8px]' : 'w-8'}`}></span>
             <span className={`block h-[2px] w-8 bg-accent transition-all duration-500 ease-in-out ${isMenuOpen ? 'opacity-0' : 'opacity-100'}`}></span>
@@ -356,81 +342,146 @@ const MasterPage: React.FC = () => {
         </div>
       </div>
 
-      {/* MAIN SECTIONS */}
       <main>
-        {/* HERO */}
-        <section className="relative min-h-screen flex items-center overflow-hidden">
-          <img src="https://static.tildacdn.com/tild3166-3265-4934-b662-326261396266/_B4A6054-Edit.jpg" alt="" className="absolute inset-0 w-full h-full object-cover object-top opacity-20" />
-          <div className="absolute inset-0 bg-gradient-to-b from-dark/60 to-dark" />
-          <div className="container mx-auto px-6 relative z-10 pt-24 md:pt-32 text-left">
+        {/* HERO SECTION */}
+        <section className="relative h-screen flex flex-col justify-center overflow-hidden">
+          {/* IMAGE - OPACITY 100 */}
+          <img
+            src="https://static.tildacdn.com/tild3166-3265-4934-b662-326261396266/_B4A6054-Edit.jpg"
+            alt=""
+            className="absolute inset-0 w-full h-full object-cover object-top opacity-100"
+          />
+          {/* GRADIENTS */}
+          <div className="absolute inset-0 bg-gradient-to-b from-dark/30 via-dark/50 to-dark" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_35%_30%,rgba(197,160,89,0.1),transparent_60%)]" />
+
+          {/* CONTENT - OFFSET +30PX FOR MOBILE READABILITY */}
+          <div className="container mx-auto px-6 relative z-10 text-left transform translate-y-[30px] md:translate-y-0">
             <div className="max-w-4xl">
-              <span className="text-accent text-[10px] font-bold tracking-[6px] uppercase border-l border-accent/60 pl-6 mb-10 block leading-none">ПРОТОКОЛ БЕЗУПРЕЧНОСТИ™</span>
-              <h1 className="font-serif text-[48px] leading-[1] md:text-8xl lg:text-9xl text-white mb-10 tracking-tight">Ваш имидж — это <br className="hidden md:block" /><span className="text-accent italic font-light gold-gradient-text">актив или пассив?</span> <br className="hidden md:block" />Начните извлекать прибыль.</h1>
-              <p className="max-w-2xl mb-16 text-lg md:text-2xl text-white/70 font-light leading-relaxed">
-                <span className="text-accent font-medium">Executive Protocol™:</span> Создание визуального капитала уровня Forbes за 60 минут. Математическая точность образа от физика.
-              </p>
+              <span className="text-accent text-[10px] font-bold tracking-[6px] uppercase border-l border-accent/60 pl-6 mb-8 block leading-none">
+                ПРОТОКОЛ БЕЗУПРЕЧНОСТИ™
+              </span>
+
+              <h1 className="font-serif text-[42px] leading-[1.1] md:text-8xl lg:text-9xl text-white mb-8 tracking-tight">
+                Ваш имидж — это <br />
+                актив или пассив? <br />
+                <span className="text-accent italic font-light gold-gradient-text">
+                  Начните извлекать прибыль.
+                </span>
+              </h1>
+
+              <div className="max-w-4xl mb-12 text-sm md:text-xl text-white/90 font-light leading-relaxed">
+                <span className="text-[15px] md:text-lg">Визуальный капитал</span> <br /> 
+                <span className="text-[15px] md:text-lg">уровня Forbes.</span> <br />
+                Математическая точность образа. <br />
+                Вечная эстетика.
+              </div>
+
               <div className="flex flex-col sm:flex-row gap-6">
-                <a href="http://t.me/latypovvalery" className="bg-accent text-dark px-14 py-6 text-[11px] font-black uppercase tracking-widest hover:bg-white transition-all shadow-2xl text-center">ЗАБРОНИРОВАТЬ АУДИТ</a>
-                <a href="#archive" className="border border-white/20 text-white px-14 py-6 text-[11px] font-black uppercase tracking-widest hover:bg-white/5 transition-all text-center">Портфолио</a>
+                <a
+                  href="tel:+79852246789"
+                  className="bg-accent text-dark px-14 py-6 text-[11px] font-black uppercase tracking-widest hover:bg-white transition-all shadow-2xl text-center"
+                >
+                  📞 +7 985 224-67-89
+                </a>
+
+                <a
+                  href="#portfolio"
+                  className="border border-white/30 text-white px-14 py-6 text-[11px] font-black uppercase tracking-widest hover:bg-white/5 transition-all text-center"
+                >
+                  ДОКАЗАТЕЛЬСТВА
+                </a>
               </div>
             </div>
           </div>
         </section>
 
-        {/* WOW COLLECTION */}
-        <SmartGallery id="archive" title="Трансформация Статуса" subtitle="The WOW Collection" type="comparison" items={COMPARISON_COLLECTION} isLCP={true} />
+        {/* WOW COLLECTION (SHOWCASE) -> ДОКАЗАТЕЛЬСТВА */}
+        <SmartGallery id="archive" title="Трансформация Статуса" subtitle="ДОКАЗАТЕЛЬСТВА" type="comparison" items={COMPARISON_COLLECTION} isLCP={true} />
 
-        {/* ABOUT */}
-        <section className="py-24 md:py-40 bg-[#0a0a0a] border-b border-white/5 font-sans" id="about">
-          <div className="container mx-auto px-6">
-            <div className="flex flex-col lg:flex-row gap-16 lg:gap-32 items-center lg:items-start text-left">
+        {/* ABOUT SECTION */}
+        <section className="py-24 md:py-40 bg-[#0a0a0a] border-b border-white/5" id="about">
+          <div className="container mx-auto px-6 text-left">
+            <div className="flex flex-col lg:flex-row gap-16 lg:gap-32 items-center lg:items-start">
               <div className="w-full lg:w-[38%] fade-up">
                 <div className="relative group">
                   <div className="absolute -inset-4 border border-white/5 translate-x-2 translate-y-2 -z-10 group-hover:translate-x-0 group-hover:translate-y-0 transition-transform duration-1000"></div>
-                  <div className="aspect-[4/5] overflow-hidden bg-black/40 border border-white/10 shadow-3xl"><img src="https://static.tildacdn.com/tild3731-3461-4238-a132-336333353164/IMG_1119.jpg" alt="Latypov" className="w-full h-full object-cover grayscale brightness-90 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-1000 ease-out"/></div>
+                  <div className="aspect-[4/5] overflow-hidden bg-black/40 border border-white/10 shadow-3xl">
+                    <img src="https://static.tildacdn.com/tild3731-3461-4238-a132-336333353164/IMG_1119.jpg" alt="Latypov" className="w-full h-full object-cover grayscale brightness-90 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-1000"/>
+                  </div>
                 </div>
               </div>
               <div className="w-full lg:w-[55%] fade-up delay-200">
                 <div className="inline-flex items-center gap-4 mb-8"><span className="h-[1px] w-8 bg-accent/40"></span><span className="text-accent uppercase tracking-[6px] text-[10px] font-extrabold">20 лет опыта</span></div>
                 <h2 className="font-serif text-[38px] md:text-[56px] text-white leading-[1.1] mb-10 tracking-tight">Я снимаю тех, чье время стоит <span className="italic">дороже денег.</span></h2>
-                <div className="space-y-6 text-white/60 text-lg font-light leading-relaxed mb-12 max-w-xl"><p>Меня зовут Валерий Латыпов. Мои герои — люди, принимающие глобальные решения. Архитекторы реальностей, для которых имидж — это не картинка, а стратегический актив.</p><p><strong className="text-white font-medium">Я работал в Белом Доме (Москва)</strong>, снимал в Мэрии Москвы и в закрытых кабинетах ОАЭ, Лондона и Нью-Йорка.</p></div>
+                <div className="space-y-6 text-white/60 text-lg font-light leading-relaxed mb-12 max-w-xl">
+                  <p>Меня зовут Валерий Латыпов. Мои герои — люди, принимающие глобальные решения. Архитекторы реальностей, для которых имидж — это не картинка, а стратегический актив.</p>
+                  <p><strong className="text-white font-medium">Я работал в Белом Доме (Москва)</strong>, снимал в Мэрии Москвы и в закрытых кабинетах ОАЭ, Лондона и Нью-Йорка.</p>
+                </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* METAMORPHOSIS SECTION */}
+        {/* METAMORPHOSIS - UPDATED HEADER AND TEXT LAYOUT */}
         <section id="manifesto" className="py-24 md:py-48 bg-[#080808] border-b border-white/5">
           <div className="container mx-auto px-6 text-center">
             <div className="mb-16 md:mb-28 max-w-4xl mx-auto fade-up">
               <span className="text-accent text-[11px] font-black uppercase tracking-widest mb-8 block">ПРОТОКОЛ БЕЗУПРЕЧНОСТИ™</span>
-              <h2 className="font-serif text-[42px] md:text-7xl text-white leading-tight mb-10 italic">Визуальный капитал <span className="gold-gradient-text">уровня Forbes</span></h2>
-              <p className="text-white/40 text-lg md:text-xl font-light max-w-2xl mx-auto">Без стилистов, без суеты, без компромиссов.</p>
+              <h2 className="font-serif text-[36px] md:text-6xl text-white leading-tight mb-10 italic">
+                Визуальный капитал <br />
+                <span className="gold-gradient-text">уровня Forbes</span>
+              </h2>
+              <div className="text-white/40 text-sm md:text-base font-light max-w-2xl mx-auto leading-relaxed">
+                Без стилистов, без суеты, <br />
+                без компромиссов.
+              </div>
             </div>
             <TransformationMetamorphosis />
           </div>
         </section>
 
-        {/* GLOBAL STAGE */}
-        <SmartGallery id="global-stage" title="Те, кто доверил мне капитал" subtitle="Cultural Code" type="photo" items={AUTHORITY_ARCHIVE} />
+        {/* GLOBAL STAGE (PORTFOLIO) -> Title: Визионеры */}
+        <SmartGallery id="global-stage" title="Визионеры" subtitle="ПОРТФОЛИО" type="photo" items={AUTHORITY_ARCHIVE} />
 
-        {/* SOCIAL PROOF */}
-        <SmartGallery id="portfolio" title="Доверие тех, кто выбрал меня" subtitle="Social Proof" type="video" items={TESTIMONIALS} />
+        {/* SOCIAL PROOF (TESTIMONIALS) -> Послушайте сами */}
+        <SmartGallery id="portfolio" title="Послушайте сами" subtitle="ДОКАЗАТЕЛЬСТВА" type="video" items={TESTIMONIALS} />
 
-        {/* FAQ */}
+        {/* FAQ SECTION -> ВОЗРАЖЕНИЯ (Updated with User Content) */}
         <section className="py-24 md:py-32 bg-dark" id="faq">
-          <div className="container mx-auto px-6">
+          <div className="container mx-auto px-6 text-left">
             <div className="mb-16 md:mb-24 text-center fade-up">
-              <span className="text-accent text-[11px] font-black tracking-[5px] uppercase block mb-6">Discovery phase</span>
-              <h2 className="font-serif text-4xl md:text-6xl text-white tracking-tight italic">Вопросы и Ответы</h2>
+              <span className="text-accent text-[11px] font-black tracking-[5px] uppercase block mb-6">
+                ВОЗРАЖЕНИЯ
+              </span>
+              <h2 className="font-serif text-4xl md:text-6xl text-white tracking-tight italic">
+                Что вас останавливает?
+              </h2>
             </div>
             <div className="max-w-4xl mx-auto fade-up space-y-4">
               {[
-                { q: "Не будет ли портрет выглядеть искусственно?", a: "Мы не меняем вашу личность. Глаза, мимика и взгляд остаются нетронутыми. AI используется только как инструмент для создания безупречной одежды." },
-                { q: "Насколько это конфиденциально?", a: "Мы подписываем строгий NDA. Ваши материалы хранятся на защищенных серверах и удаляются после завершения проекта." },
-                { q: "Что если я не умею позировать?", a: "Вам и не нужно. Моя работа — режиссура состояния. Мы просто общаемся в комфортном ритме, пока я фиксирую вашу естественную харизму." }
+                { 
+                  q: "Сколько времени займет сессия?", 
+                  a: "Обычно процесс занимает до 60 минут, но мы не привязаны к таймеру. Мы работаем до тех пор, пока не добьемся кадра, который станет вашим эталоном. Важен результат, а не время на часах." 
+                },
+                { 
+                  q: "Не будет ли портрет выглядеть искусственно?", 
+                  a: "Мы не меняем вашу личность. Глаза, мимика и взгляд остаются нетронутыми. AI используется только как инструмент «цифрового пошива» для создания безупречной одежды и управления светом." 
+                },
+                { 
+                  q: "Насколько это конфиденциально?", 
+                  a: "Мы подписываем строгий NDA. Ваши материалы хранятся на защищенных серверах и безвозвратно удаляются после завершения проекта. Ваша приватность — часть протокола." 
+                },
+                { 
+                  q: "Что если я не умею позировать?", 
+                  a: "Вам и не нужно. Моя работа — режиссура состояния. Мы просто общаемся в комфортном ритме, пока я фиксирую вашу естественную харизму. Вы будете собой, но в лучшем воплощении." 
+                },
+                { 
+                  q: "Для чего подходят эти фото?", 
+                  a: "Вы получаете активы в сверхвысоком разрешении. Они безупречны для обложек бизнес-глянца, интервью, личных экосистем и широкоформатной печати." 
+                }
               ].map((item, i) => (
-                <div key={i} className="border-b border-white/10 pb-4 text-left">
+                <div key={i} className="border-b border-white/10 pb-4">
                   <h4 className="font-serif text-2xl text-white mb-4 italic">{item.q}</h4>
                   <p className="text-white/40 text-lg font-light leading-relaxed">{item.a}</p>
                 </div>
@@ -439,19 +490,28 @@ const MasterPage: React.FC = () => {
           </div>
         </section>
 
-        {/* GUARANTEE */}
-        <section className="py-24 bg-[#0a0a0a] border-t border-white/5 fade-up">
-          <div className="container mx-auto px-6 text-center">
-            <span className="text-accent text-[11px] font-black uppercase tracking-[5px] mb-4 block">Безусловная гарантия</span>
-            <h2 className="font-serif text-4xl md:text-5xl text-white mb-8 italic">Risk Reversal</h2>
-            <p className="text-white/40 text-lg md:text-2xl font-light max-w-3xl mx-auto leading-relaxed italic">«Если на этапе превью вы не увидите масштаб своей личности — проект останавливается, оплата не взимается. Я беру все риски на себя.»</p>
+        {/* CUSTOM GUARANTEE SECTION */}
+        <section className="py-24 md:py-32 bg-dark relative overflow-hidden">
+          <div className="container mx-auto px-6 text-center relative z-10">
+            <div className="max-w-3xl mx-auto fade-up">
+              <span className="text-accent text-[11px] font-black tracking-[5px] uppercase block mb-6">
+                МОЁ СЛОВО
+              </span>
+              <h2 className="font-serif text-4xl md:text-6xl text-white tracking-tight italic mb-8">
+                Безусловная гарантия
+              </h2>
+              <p className="text-lg md:text-xl text-white/60 leading-relaxed">
+                Если на этапе превью вы не увидите масштаб своей личности — проект останавливается, оплата не взимается. <br />
+                Я беру все риски на себя.
+              </p>
+            </div>
           </div>
         </section>
 
-        {/* PRICING */}
+        {/* PRICING SECTION */}
         <section id="pricing" className="py-32 md:py-64 bg-dark">
-          <div className="container mx-auto px-6">
-            <div className="max-w-6xl mx-auto border border-accent/20 bg-card p-12 md:p-32 text-center relative shadow-3xl">
+          <div className="container mx-auto px-6 text-center">
+            <div className="max-w-6xl mx-auto border border-accent/20 bg-card p-12 md:p-32 relative shadow-3xl">
               <span className="text-accent/50 text-[11px] font-black tracking-[0.5em] uppercase block mb-12">Инвестиция в статус</span>
               <div className="font-serif text-6xl md:text-[100px] text-white gold-gradient-text mb-12">250 000 ₽</div>
               <a href="http://t.me/latypovvalery" target="_blank" className="block w-full max-w-sm mx-auto bg-dark border border-accent/40 text-accent py-8 text-[11px] font-black uppercase tracking-widest hover:bg-accent hover:text-dark transition-all">ЗАБРОНИРОВАТЬ СЛОТ</a>
@@ -462,8 +522,8 @@ const MasterPage: React.FC = () => {
 
       {/* FOOTER */}
       <footer className="py-24 bg-black text-center border-t border-white/5">
-        <div className="font-serif text-2xl md:text-5xl tracking-[0.5em] text-white/90 mb-6 uppercase">VALERY LATYPOV</div>
-        <div className="text-accent text-[9px] font-black tracking-widest uppercase opacity-80">Executive Protocol™ © 2025</div>
+        <div className="font-serif text-2xl md:text-5xl tracking-[0.5em] text-white/90 mb-6 uppercase">ВАЛЕРИЙ ЛАТЫПОВ</div>
+        <div className="text-accent text-[9px] font-black tracking-widest uppercase opacity-80">Executive Protocol™ © 2026</div>
       </footer>
     </div>
   );

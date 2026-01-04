@@ -16,4 +16,4 @@
 - **Google Gemini API** (встроено в сервис стратегий)
 
 ---
-© 2025 Valery Latypov. Executive Protocol™.
+© 2026 Valery Latypov. Executive Protocol™.
