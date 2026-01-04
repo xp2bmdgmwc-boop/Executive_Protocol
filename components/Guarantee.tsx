@@ -11,7 +11,7 @@ const Guarantee: React.FC = () => (
         </div>
         <span className="text-accent text-[11px] font-black uppercase tracking-[5px] mb-4 block">Безусловная гарантия</span>
       </div>
-      <h2 className="font-serif text-4xl md:text-5xl text-white mb-8 italic">Risk Reversal</h2>
+      <h2 className="font-serif text-4xl md:text-5xl text-white mb-8 italic invisible h-0 m-0">Risk Reversal</h2>
       <p className="text-white/40 text-lg md:text-2xl font-light max-w-3xl mx-auto leading-relaxed">
         «Если на этапе превью вы не увидите масштаб своей личности — проект останавливается, оплата не взимается. <span className="text-white">Я беру все риски на себя.</span>»
       </p>
